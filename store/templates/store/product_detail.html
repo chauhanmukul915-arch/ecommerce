@@ -5,71 +5,118 @@
     <title>{{ product.name }}</title>
     <link rel="stylesheet" href="{% static 'store/style.css' %}">
 </head>
+
 <body>
+
 <header>
     <h1>Product Details 🛍️</h1>
+
     <div>
         <a href="{% url 'home' %}">
             <button>Home 🏠</button>
         </a>
+
         <a href="{% url 'cart' %}">
             <button>🛒 Cart ({{ cart_count }})</button>
         </a>
     </div>
 </header>
+
+
 <div class="product-card">
+
     {% if product.image %}
         <img
             src="{{ product.image.url }}"
             alt="{{ product.name }}"
             class="product-image"
+            style="
+                width: 150px;
+                height: 130px;
+                max-width: 150px;
+                max-height: 130px;
+                object-fit: contain;
+                display: block;
+                margin: 0 auto 20px;
+            "
         >
     {% endif %}
+
+
     <h2>{{ product.name }}</h2>
+
+
     <p>
         {{ product.description }}
     </p>
+
+
     <p class="price">
         ₹{{ product.price }}
     </p>
+
+
     <p>
         Stock: {{ product.stock }}
     </p>
+
+
     {% if product.stock > 0 %}
+
         <a href="{% url 'add_to_cart' product.id %}">
             <button>
                 Add to Cart 🛒
             </button>
         </a>
+
     {% else %}
+
         <button disabled>
             Out of Stock
         </button>
+
     {% endif %}
+
+
     <br><br>
+
+
     {% if user.is_authenticated %}
+
         <form
             method="POST"
             action="{% url 'toggle_wishlist' product.id %}"
         >
+
             {% csrf_token %}
+
             <button type="submit">
                 ❤️ Add to Wishlist
             </button>
+
         </form>
+
     {% else %}
+
         <a href="{% url 'login' %}">
             <button>
                 ❤️ Login to Wishlist
             </button>
         </a>
+
     {% endif %}
+
+
     <br><br>
+
+
     <a href="{% url 'home' %}">
         <button>
             ← Back to Store
         </button>
     </a>
+
 </div>
+
 </body>
 </html>
