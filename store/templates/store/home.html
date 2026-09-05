@@ -4,53 +4,81 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>My E-Commerce Store</title>
 
     <link rel="stylesheet" href="{% static 'store/style.css' %}">
+
 </head>
+
 
 <body>
 
-    <!-- HEADER -->
+
+    <!-- ================= HEADER ================= -->
+
     <header>
 
-        <h1>My Store 🛒</h1>
+        <h1>
+            My Store 🛒
+        </h1>
+
 
         <div>
 
             {% if user.is_authenticated %}
 
-                <span>Welcome, {{ user.username }}!</span>
+                <span>
+                    Welcome, {{ user.username }}!
+                </span>
+
 
                 <a href="{% url 'order_history' %}">
-                    <button>My Orders 📦</button>
+                    <button>
+                        My Orders 📦
+                    </button>
                 </a>
+
 
                 <a href="{% url 'wishlist' %}">
-                    <button>❤️ Wishlist</button>
+                    <button>
+                        ❤️ Wishlist
+                    </button>
                 </a>
 
+
                 <a href="{% url 'logout' %}">
-                    <button>Logout</button>
+                    <button>
+                        Logout
+                    </button>
                 </a>
 
             {% else %}
 
                 <a href="{% url 'login' %}">
-                    <button>Login 👤</button>
+                    <button>
+                        Login 👤
+                    </button>
                 </a>
 
+
                 <a href="{% url 'register' %}">
-                    <button>Register</button>
+                    <button>
+                        Register
+                    </button>
                 </a>
 
             {% endif %}
 
+
             <a href="{% url 'cart' %}">
-                <button>🛒 Cart ({{ cart_count }})</button>
+                <button>
+                    🛒 Cart ({{ cart_count }})
+                </button>
             </a>
 
         </div>
@@ -58,19 +86,29 @@
     </header>
 
 
-    <!-- HERO SECTION -->
+
+    <!-- ================= HERO SECTION ================= -->
+
     <div class="hero">
 
         <div class="hero-content">
 
-            <h1>Shop Everything You Love 🛍️</h1>
+            <h1>
+                Shop Everything You Love 🛍️
+            </h1>
+
 
             <p>
                 Discover great products at amazing prices.
             </p>
 
+
             <a href="#products">
-                <button>Shop Now 🛒</button>
+
+                <button>
+                    Shop Now 🛒
+                </button>
+
             </a>
 
         </div>
@@ -78,10 +116,15 @@
     </div>
 
 
-    <!-- SEARCH BAR -->
+
+    <!-- ================= SEARCH BAR ================= -->
+
     <div style="text-align: center; margin: 30px;">
 
-        <form method="GET" action="{% url 'home' %}">
+        <form
+            method="GET"
+            action="{% url 'home' %}"
+        >
 
             <input
                 type="text"
@@ -96,6 +139,7 @@
                 "
             >
 
+
             <button type="submit">
                 🔍 Search
             </button>
@@ -105,17 +149,31 @@
     </div>
 
 
-    <!-- CATEGORY MENU -->
+
+    <!-- ================= CATEGORY MENU ================= -->
+
     <div style="text-align: center; margin: 20px;">
 
+        <!-- ALL PRODUCTS -->
+
         <a href="{% url 'home' %}">
-            <button>All Products</button>
+
+            <button>
+                All Products
+            </button>
+
         </a>
+
+
+        <!-- CATEGORY SELECT -->
 
         <form
             method="GET"
             action="{% url 'home' %}"
-            style="display: inline-block; margin-left: 10px;"
+            style="
+                display: inline-block;
+                margin-left: 10px;
+            "
         >
 
             <select
@@ -132,37 +190,52 @@
                     Select Category
                 </option>
 
+
                 <option
                     value="shoes"
-                    {% if category == 'shoes' %}selected{% endif %}
+                    {% if category == 'shoes' %}
+                        selected
+                    {% endif %}
                 >
                     👟 Shoes
                 </option>
 
+
                 <option
                     value="clothes"
-                    {% if category == 'clothes' %}selected{% endif %}
+                    {% if category == 'clothes' %}
+                        selected
+                    {% endif %}
                 >
                     👕 Clothes
                 </option>
 
+
                 <option
                     value="electronics"
-                    {% if category == 'electronics' %}selected{% endif %}
+                    {% if category == 'electronics' %}
+                        selected
+                    {% endif %}
                 >
                     📱 Electronics
                 </option>
 
+
                 <option
                     value="accessories"
-                    {% if category == 'accessories' %}selected{% endif %}
+                    {% if category == 'accessories' %}
+                        selected
+                    {% endif %}
                 >
                     🎒 Accessories
                 </option>
 
+
                 <option
                     value="other"
-                    {% if category == 'other' %}selected{% endif %}
+                    {% if category == 'other' %}
+                        selected
+                    {% endif %}
                 >
                     📦 Other
                 </option>
@@ -174,129 +247,185 @@
     </div>
 
 
-    <!-- PRODUCTS -->
-   <div class="products" id="products">
 
-    {% for product in products %}
+    <!-- ================= PRODUCTS ================= -->
 
-    <div class="product-card">
+    <div
+        class="products"
+        id="products"
+    >
 
-        {% if product.image %}
-        <div class="product-image-container">
-            <img src="{{ product.image.url }}"
-                 alt="{{ product.name }}"
-                 class="product-image">
-        </div>
-        {% endif %}
 
-        <h3>
-            <a href="{% url 'product_detail' product.id %}">
-                {{ product.name }}
-            </a>
-        </h3>
+        {% if products %}
 
-        <p>{{ product.description }}</p>
 
-        <h2>₹{{ product.price }}</h2>
+            {% for product in products %}
 
-        <p>Stock: {{ product.stock }}</p>
 
-        <p>Category: {{ product.category }}</p>
+                <!-- PRODUCT CARD -->
 
-        {% if product.stock > 0 %}
-            <a href="{% url 'add_to_cart' product.id %}" class="btn">
-                Add to Cart 🛒
-            </a>
+                <div class="product-card">
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    {% if product.image %}
+
+                        <div class="product-image-container">
+
+                            <img
+                                src="{{ product.image.url }}"
+                                alt="{{ product.name }}"
+                                class="product-image"
+                            >
+
+                        </div>
+
+                    {% endif %}
+
+
+
+                    <!-- PRODUCT NAME -->
+
+                    <h3>
+
+                        <a
+                            href="{% url 'product_detail' product.id %}"
+                        >
+                            {{ product.name }}
+                        </a>
+
+                    </h3>
+
+
+
+                    <!-- PRODUCT DESCRIPTION -->
+
+                    {% if product.description %}
+
+                        <p>
+                            {{ product.description }}
+                        </p>
+
+                    {% endif %}
+
+
+
+                    <!-- PRODUCT PRICE -->
+
+                    <p class="price">
+                        ₹{{ product.price }}
+                    </p>
+
+
+
+                    <!-- PRODUCT STOCK -->
+
+                    <p>
+                        Stock: {{ product.stock }}
+                    </p>
+
+
+
+                    <!-- PRODUCT CATEGORY -->
+
+                    <p>
+                        Category: {{ product.get_category_display }}
+                    </p>
+
+
+
+                    <!-- ADD TO CART -->
+
+                    {% if product.stock > 0 %}
+
+                        <a
+                            href="{% url 'add_to_cart' product.id %}"
+                        >
+
+                            <button>
+                                Add to Cart 🛒
+                            </button>
+
+                        </a>
+
+                    {% else %}
+
+                        <button disabled>
+                            Out of Stock
+                        </button>
+
+                    {% endif %}
+
+
+
+                    <!-- WISHLIST -->
+
+                    {% if user.is_authenticated %}
+
+                        <br>
+                        <br>
+
+                        <a
+                            href="{% url 'toggle_wishlist' product.id %}"
+                        >
+
+                            <button>
+                                ❤️ Wishlist
+                            </button>
+
+                        </a>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            {% endfor %}
+
+
         {% else %}
-            <span class="out-of-stock">Out of Stock</span>
-        {% endif %}
-
-        <a href="#" class="wishlist-btn">
-            ❤️ Wishlist
-        </a>
-
-    </div>
-
-    {% empty %}
-
-        <p>No products found.</p>
-
-    {% endfor %}
-
-</div>
-
-                <!-- STOCK -->
-                <p>
-                    Stock: {{ product.stock }}
-                </p>
 
 
-                <!-- CATEGORY -->
-                <p>
-                    Category: {{ product.get_category_display }}
-                </p>
+            <!-- NO PRODUCTS -->
 
+            <p style="text-align: center; width: 100%;">
 
-                <!-- CART BUTTON -->
-                {% if product.stock > 0 %}
-
-                    <a href="{% url 'add_to_cart' product.id %}">
-                        <button>
-                            Add to Cart 🛒
-                        </button>
-                    </a>
-
-                {% else %}
-
-                    <button disabled>
-                        Out of Stock
-                    </button>
-
-                {% endif %}
-
-
-                <!-- WISHLIST -->
-                {% if user.is_authenticated %}
-
-                    <br><br>
-
-                    <a href="{% url 'toggle_wishlist' product.id %}">
-                        <button>
-                            ❤️ Wishlist
-                        </button>
-                    </a>
-
-                {% endif %}
-
-            </div>
-
-        {% empty %}
-
-            <p>
                 No products found.
+
             </p>
 
-        {% endfor %}
+
+        {% endif %}
+
 
     </div>
 
 
-    <!-- FOOTER -->
+
+    <!-- ================= FOOTER ================= -->
+
     <footer class="footer">
+
 
         <h3>
             My Store 🛒
         </h3>
 
+
         <p>
             ©️ 2026 My Store. All rights reserved.
         </p>
+
 
         <p>
             Built with HTML, CSS, JavaScript & Django.
         </p>
 
+
     </footer>
+
 
 </body>
 
