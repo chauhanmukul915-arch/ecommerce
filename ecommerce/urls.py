@@ -1,0 +1,99 @@
+from django.contrib import admin
+from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+from store.views import (
+    home,
+    add_to_cart,
+    cart,
+    increase_quantity,
+    decrease_quantity,
+    remove_from_cart,
+    checkout,
+    product_detail,
+    register,
+    user_login,
+    user_logout,
+    order_history,
+    toggle_wishlist,
+    wishlist,
+    wishlist_add_to_cart,
+)
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', home, name='home'),
+    path(
+        'add-to-cart/<int:product_id>/',
+        add_to_cart,
+        name='add_to_cart'
+    ),
+    path(
+        'cart/',
+        cart,
+        name='cart'
+    ),
+    path(
+        'cart/increase/<int:product_id>/',
+        increase_quantity,
+        name='increase_quantity'
+    ),
+    path(
+        'cart/decrease/<int:product_id>/',
+        decrease_quantity,
+        name='decrease_quantity'
+    ),
+    path(
+        'cart/remove/<int:product_id>/',
+        remove_from_cart,
+        name='remove_from_cart'
+    ),
+    path(
+        'checkout/',
+        checkout,
+        name='checkout'
+    ),
+    path(
+        'product/<int:product_id>/',
+        product_detail,
+        name='product_detail'
+    ),
+    path(
+        'register/',
+        register,
+        name='register'
+    ),
+    path(
+        'login/',
+        user_login,
+        name='login'
+    ),
+    path(
+        'logout/',
+        user_logout,
+        name='logout'
+    ),
+    path(
+        'orders/',
+        order_history,
+        name='order_history'
+    ),
+    path(
+        'wishlist/toggle/<int:product_id>/',
+        toggle_wishlist,
+        name='toggle_wishlist'
+    ),
+    path(
+    'wishlist/add-to-cart/<int:product_id>/',
+    wishlist_add_to_cart,
+    name='wishlist_add_to_cart'
+),
+    path(
+        'wishlist/',
+        wishlist,
+        name='wishlist'
+    ),
+]
+urlpatterns += static(
+    settings.MEDIA_URL,
+    document_root=settings.MEDIA_ROOT
+)

@@ -1,0 +1,131 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Orders</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+<header>
+<h1>My Orders 📦</h1>
+<div>
+    <a href="{% url 'home' %}">
+        <button>Home 🏠</button>
+    </a>
+    <a href="{% url 'cart' %}">
+        <button>🛒 Cart ({{ cart_count }})</button>
+    </a>
+</div>
+</header>
+<div class="products">
+{% for order in orders %}
+    <div class="product-card">
+        <h2>Order #{{ order.id }}</h2>
+        <p>
+            <strong>Order Date:</strong>
+            {{ order.created_at|date:"d M Y, h:i A" }}
+        </p>
+        <!-- ORDER STATUS TIMELINE -->
+        <h3>Order Status 🚚</h3>
+        <div style="margin: 20px 0;">
+            <!-- ORDER PLACED -->
+            <div style="margin-bottom: 15px;">
+                {% if order.status == 'pending' or order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}
+                    <strong>🟢 Order Placed</strong>
+                {% else %}
+                    <strong>⚪ Order Placed</strong>
+                {% endif %}
+            </div>
+            <!-- CONFIRMED -->
+            <div style="margin-bottom: 15px;">
+                {% if order.status == 'confirmed' or order.status == 'shipped' or order.status == 'delivered' %}
+                    <strong>🟢 Confirmed</strong>
+                {% else %}
+                    <strong>⚪ Confirmed</strong>
+                {% endif %}
+            </div>
+            <!-- SHIPPED -->
+            <div style="margin-bottom: 15px;">
+                {% if order.status == 'shipped' or order.status == 'delivered' %}
+                    <strong>🟢 Shipped</strong>
+                {% else %}
+                    <strong>⚪ Shipped</strong>
+                {% endif %}
+            </div>
+            <!-- DELIVERED -->
+            <div>
+                {% if order.status == 'delivered' %}
+                    <strong>🟢 Delivered</strong>
+                {% else %}
+                    <strong>⚪ Delivered</strong>
+                {% endif %}
+            </div>
+        </div>
+        <p>
+            <strong>Current Status:</strong>
+            {{ order.get_status_display }}
+        </p>
+        <hr>
+        <!-- PRODUCTS -->
+        <h3>Products 🛍️</h3>
+        {% for item in order.items.all %}
+            <div style="margin-bottom: 20px;">
+                {% if item.product.image %}
+                    <img
+                        src="{{ item.product.image.url }}"
+                        alt="{{ item.product.name }}"
+                        style="
+                            width: 80px;
+                            height: 80px;
+                            object-fit: contain;
+                        "
+                    >
+                {% endif %}
+                <p>
+                    <strong>{{ item.product.name }}</strong>
+                </p>
+                <p>
+                    Price: ₹{{ item.price }}
+                </p>
+                <p>
+                    Quantity: {{ item.quantity }}
+                </p>
+                <p>
+                    Subtotal:
+                    ₹{% widthratio item.price 1 item.quantity %}
+                </p>
+            </div>
+            <hr>
+        {% empty %}
+            <p>No product details available.</p>
+        {% endfor %}
+        <!-- TOTAL -->
+        <h2 class="price">
+            Total: ₹{{ order.total }}
+        </h2>
+        <!-- DELIVERY DETAILS -->
+        <p>
+            <strong>Delivery Address:</strong><br>
+            {{ order.address }}<br>
+            {{ order.city }} - {{ order.pincode }}
+        </p>
+        <p>
+            <strong>Phone:</strong>
+            {{ order.phone }}
+        </p>
+    </div>
+{% empty %}
+    <div class="auth-container">
+        <h2>No orders yet 📦</h2>
+        <p>
+            Start shopping to place your first order!
+        </p>
+        <a href="{% url 'home' %}">
+            <button>Start Shopping 🛍️</button>
+        </a>
+    </div>
+{% endfor %}
+</div>
+</body>
+</html>

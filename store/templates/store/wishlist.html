@@ -1,0 +1,93 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Wishlist ❤️</title>
+    <link
+        rel="stylesheet"
+        href="{% static 'store/style.css' %}"
+    >
+</head>
+<body>
+<header>
+    <h1>My Wishlist ❤️</h1>
+    <div>
+        <a href="{% url 'home' %}">
+            <button>Home 🏠</button>
+        </a>
+        <a href="{% url 'cart' %}">
+            <button>🛒 Cart ({{ cart_count }})</button>
+        </a>
+    </div>
+</header>
+<div class="products">
+    {% for item in wishlist_items %}
+        <div class="product-card">
+            {% if item.product.image %}
+                <img
+                    src="{{ item.product.image.url }}"
+                    alt="{{ item.product.name }}"
+                    class="product-image"
+                >
+            {% endif %}
+            <h2>
+                {{ item.product.name }}
+            </h2>
+            <p>
+                {{ item.product.description }}
+            </p>
+            <p class="price">
+                ₹{{ item.product.price }}
+            </p>
+            <p>
+                Stock: {{ item.product.stock }}
+            </p>
+            <!-- VIEW PRODUCT -->
+            <a href="{% url 'product_detail' item.product.id %}">
+                <button>
+                    View Product 👀
+                </button>
+            </a>
+            <!-- ADD TO CART -->
+            {% if item.product.stock > 0 %}
+                <a href="{% url 'wishlist_add_to_cart' item.product.id %}">
+                    <button>
+                        🛒 Add to Cart
+                    </button>
+                </a>
+            {% else %}
+                <button disabled>
+                    Out of Stock
+                </button>
+            {% endif %}
+            <!-- REMOVE FROM WISHLIST -->
+            <a href="{% url 'toggle_wishlist' item.product.id %}">
+                <button>
+                    💔 Remove
+                </button>
+            </a>
+        </div>
+    {% empty %}
+        <div
+            style="
+                text-align: center;
+                width: 100%;
+                padding: 40px;
+            "
+        >
+            <h2>
+                Your Wishlist is Empty ❤️
+            </h2>
+            <p>
+                Add products you love to your wishlist.
+            </p>
+            <a href="{% url 'home' %}">
+                <button>
+                    Continue Shopping 🛍️
+                </button>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Successful</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h1>My Store 🛒</h1>
+</header>
+
+<div class="auth-container">
+
+    <h1>🎉 Order Placed Successfully!</h1>
+
+    <h2>Thank you, {{ name }}!</h2>
+
+    <p>Your order has been placed successfully.</p>
+
+    <h2>Total Amount: ₹{{ total }}</h2>
+
+    <br>
+
+    <a href="{% url 'home' %}">
+        <button>Continue Shopping 🛍️</button>
+    </a>
+
+</div>
+
+</body>
+</html>

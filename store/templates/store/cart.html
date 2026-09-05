@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{% static 'store/style.css' %}">
+</head>
+<body>
+<header>
+    <h1>My Shopping Cart 🛒</h1>
+<div>
+    <a href="{% url 'home' %}">
+        <button>Continue Shopping</button>
+    </a>
+    <a href="{% url 'cart' %}">
+        <button>🛒 Cart ({{ cart_count }})</button>
+    </a>
+</div>
+</header>
+<div class="products">
+{% for item in cart_items %}
+    <div class="product-card">
+        {% if item.product.image %}
+            <img src="{{ item.product.image.url }}"
+                 alt="{{ item.product.name }}"
+                 class="product-image">
+        {% endif %}
+        <h3>{{ item.product.name }}</h3>
+        <p>Price: ₹{{ item.product.price }}</p>
+        <p>
+            Quantity:
+        </p>
+        <a href="{% url 'decrease_quantity' item.product.id %}">
+            <button>−</button>
+        </a>
+        <strong>{{ item.quantity }}</strong>
+        <a href="{% url 'increase_quantity' item.product.id %}">
+            <button>+</button>
+        </a>
+        <p class="price">
+            Item Total: ₹{{ item.item_total }}
+        </p>
+        <a href="{% url 'remove_from_cart' item.product.id %}">
+            <button>Remove ❌</button>
+        </a>
+    </div>
+{% empty %}
+    <p>Your cart is empty.</p>
+{% endfor %}
+</div>
+<h2 style="text-align: center;">
+    Cart Total: ₹{{ total }}
+</h2>
+<div style="text-align: center; margin: 30px;">
+{% if cart_items %}
+    <a href="{% url 'checkout' %}">
+        <button>Checkout 💳</button>
+    </a>
+{% endif %}
+</div>
+</body>
+</html>
