@@ -6,27 +6,23 @@
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My E-Commerce Store</title>
+    <title>CHAUHAN STORE</title>
 
     <link rel="stylesheet" href="{% static 'store/style.css' %}">
 
 </head>
 
-
 <body>
-
 
     <!-- ================= HEADER ================= -->
 
     <header>
 
         <h1>
-            My Store 🛒
+            CHAUHAN STORE 🛒
         </h1>
-
 
         <div>
 
@@ -36,20 +32,17 @@
                     Welcome, {{ user.username }}!
                 </span>
 
-
                 <a href="{% url 'order_history' %}">
                     <button>
                         My Orders 📦
                     </button>
                 </a>
 
-
                 <a href="{% url 'wishlist' %}">
                     <button>
                         ❤️ Wishlist
                     </button>
                 </a>
-
 
                 <a href="{% url 'logout' %}">
                     <button>
@@ -65,7 +58,6 @@
                     </button>
                 </a>
 
-
                 <a href="{% url 'register' %}">
                     <button>
                         Register
@@ -73,7 +65,6 @@
                 </a>
 
             {% endif %}
-
 
             <a href="{% url 'cart' %}">
                 <button>
@@ -86,7 +77,6 @@
     </header>
 
 
-
     <!-- ================= HERO SECTION ================= -->
 
     <div class="hero">
@@ -94,27 +84,22 @@
         <div class="hero-content">
 
             <h1>
-                Shop Everything You Love 🛍️
+                Welcome to CHAUHAN STORE 🛍️
             </h1>
-
 
             <p>
                 Discover great products at amazing prices.
             </p>
 
-
             <a href="#products">
-
                 <button>
                     Shop Now 🛒
                 </button>
-
             </a>
 
         </div>
 
     </div>
-
 
 
     <!-- ================= SEARCH BAR ================= -->
@@ -139,7 +124,6 @@
                 "
             >
 
-
             <button type="submit">
                 🔍 Search
             </button>
@@ -149,7 +133,6 @@
     </div>
 
 
-
     <!-- ================= CATEGORY MENU ================= -->
 
     <div style="text-align: center; margin: 20px;">
@@ -157,11 +140,9 @@
         <!-- ALL PRODUCTS -->
 
         <a href="{% url 'home' %}">
-
             <button>
                 All Products
             </button>
-
         </a>
 
 
@@ -190,7 +171,6 @@
                     Select Category
                 </option>
 
-
                 <option
                     value="shoes"
                     {% if category == 'shoes' %}
@@ -199,7 +179,6 @@
                 >
                     👟 Shoes
                 </option>
-
 
                 <option
                     value="clothes"
@@ -210,7 +189,6 @@
                     👕 Clothes
                 </option>
 
-
                 <option
                     value="electronics"
                     {% if category == 'electronics' %}
@@ -220,7 +198,6 @@
                     📱 Electronics
                 </option>
 
-
                 <option
                     value="accessories"
                     {% if category == 'accessories' %}
@@ -229,7 +206,6 @@
                 >
                     🎒 Accessories
                 </option>
-
 
                 <option
                     value="other"
@@ -247,7 +223,6 @@
     </div>
 
 
-
     <!-- ================= PRODUCTS ================= -->
 
     <div
@@ -255,17 +230,13 @@
         id="products"
     >
 
-
         {% if products %}
 
-
             {% for product in products %}
-
 
                 <!-- PRODUCT CARD -->
 
                 <div class="product-card">
-
 
                     <!-- PRODUCT IMAGE -->
 
@@ -284,7 +255,6 @@
                     {% endif %}
 
 
-
                     <!-- PRODUCT NAME -->
 
                     <h3>
@@ -298,7 +268,6 @@
                     </h3>
 
 
-
                     <!-- PRODUCT DESCRIPTION -->
 
                     {% if product.description %}
@@ -310,13 +279,11 @@
                     {% endif %}
 
 
-
                     <!-- PRODUCT PRICE -->
 
                     <p class="price">
                         ₹{{ product.price }}
                     </p>
-
 
 
                     <!-- PRODUCT STOCK -->
@@ -326,13 +293,11 @@
                     </p>
 
 
-
                     <!-- PRODUCT CATEGORY -->
 
                     <p>
                         Category: {{ product.get_category_display }}
                     </p>
-
 
 
                     <!-- ADD TO CART -->
@@ -358,7 +323,6 @@
                     {% endif %}
 
 
-
                     <!-- WISHLIST -->
 
                     {% if user.is_authenticated %}
@@ -378,54 +342,40 @@
 
                     {% endif %}
 
-
                 </div>
-
 
             {% endfor %}
 
-
         {% else %}
-
 
             <!-- NO PRODUCTS -->
 
             <p style="text-align: center; width: 100%;">
-
                 No products found.
-
             </p>
-
 
         {% endif %}
 
-
     </div>
-
 
 
     <!-- ================= FOOTER ================= -->
 
     <footer class="footer">
 
-
         <h3>
-            My Store 🛒
+            CHAUHAN STORE 🛒
         </h3>
 
-
         <p>
-            ©️ 2026 My Store. All rights reserved.
+            ©️ 2026 CHAUHAN STORE. All rights reserved.
         </p>
-
 
         <p>
             Built with HTML, CSS, JavaScript & Django.
         </p>
 
-
     </footer>
-
 
 </body>
 
