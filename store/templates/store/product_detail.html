@@ -23,17 +23,16 @@
 </header>
 
 
-<div class="product-card">
+<div class="product-card product-detail-card">
 
     {% if product.image %}
-        <div style="width: 180px; height: 160px; margin: 0 auto 20px; overflow: hidden;">
-            <img
-                src="{{ product.image.url }}"
-                alt="{{ product.name }}"
-                style="width: 180px; height: 160px; object-fit: contain; display: block;"
-            >
-        </div>
+        <img
+            src="{{ product.image.url }}"
+            alt="{{ product.name }}"
+            class="product-detail-image"
+        >
     {% endif %}
+
 
     <h2>{{ product.name }}</h2>
 
